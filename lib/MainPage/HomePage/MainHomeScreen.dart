@@ -3,6 +3,7 @@ import 'package:algostudiotest/Utils/LoadingPage.dart';
 import 'package:algostudiotest/bloc/meme_bloc/meme_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'component/detailScreen.dart';
@@ -35,7 +36,15 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: BlocConsumer<MemeBloc, MemeState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is ErrorGetMemeInitial){
+            Fluttertoast.showToast(
+                msg: state.message,
+                toastLength: Toast.LENGTH_LONG,
+                backgroundColor: Colors.red
+            );
+          }
+        },
         builder: (context, state) {
           if (state is SuccessGetMemeInitial){
             memeData = state.data;
